@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <inttypes.h>
-#include "wave.h"
+#include "jp/differencia/suono/SinWaveMono.h"
+#include "jp/differencia/suono/SawtoothWaveMono.h"
 
-int main(void) {
+void createSinWaveMono(void) {
   uint32_t fs = 44100;
   uint8_t bits = 16;
   uint32_t duration = 1;
@@ -20,5 +21,28 @@ int main(void) {
 
   write_SinWaveMono(&sinWave, "sin_wave_500.wav");
   free_SinWaveMono(&sinWave);
-  return 0;
+}
+
+void createSawtoothWaveMono(void) {
+  uint32_t fs = 44100;
+  uint8_t bits = 16;
+  uint32_t duration = 1;
+  double gain = 0.1;
+  double f0 = 500.0;
+  uint32_t numOvertones = 64;
+
+  SawtoothWaveMono sawtoothWave;
+  new_SawtoothWaveMono(&sawtoothWave, fs, bits, duration, gain, f0, numOvertones);
+  
+  printf("fs: %d\n", getFs_SawtoothWaveMono(&sawtoothWave));
+  printf("bits: %" PRIu8 "\n", getBits_SawtoothWaveMono(&sawtoothWave));
+  printf("length: %d\n", getLength_SawtoothWaveMono(&sawtoothWave));
+
+  write_SawtoothWaveMono(&sawtoothWave, "sawtooth_wave_500.wav");
+  free_SawtoothWaveMono(&sawtoothWave);
+}
+
+int main(void) {
+    createSawtoothWaveMono();
+    return 0;
 }
