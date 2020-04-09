@@ -1,3 +1,5 @@
 *.out
+*.gch
+*.wav
 
 .DS_Store
